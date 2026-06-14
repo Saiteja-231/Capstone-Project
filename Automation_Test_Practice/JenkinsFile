@@ -6,7 +6,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git(branch: 'master',
+        git(branch: 'main',
             url: 'https://github.com/Saiteja-231/Capstone-Project.git')
       }
     }
