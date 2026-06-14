@@ -1,0 +1,36 @@
+pipeline {
+  agent any
+  tools {
+    maven 'Maven3'
+  }
+  stages {
+    stage('Checkout') {
+      steps {
+        git(branch: 'master',
+            url: 'https://github.com/Saiteja-231/Capstone-Project.git')
+      }
+    }
+    stage('Build') {
+      steps {
+        dir('Automation_Test_Practice') {
+          bat 'mvn clean compile'
+        }
+      }
+    }
+    stage('Test') {
+      steps {
+        dir('Automation_Test_Practice') {
+          bat 'mvn test'
+        }
+      }
+    }
+  }
+  post {
+    always {
+      dir('Automation_Test_Practice') {
+        archiveArtifacts artifacts: 'test-output/**, Reports/**, Screenshot/**',
+                         allowEmptyArchive: true
+      }
+    }
+  }
+}
